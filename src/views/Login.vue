@@ -12,8 +12,8 @@
         <div class="mt-2">
           <p class="text-danger" v-if="errorMessage">{{ errorMessage }}</p>
         </div>
-        <label for="username">Username</label>
-        <input type="text" v-model="email" placeholder="Email or Phone" id="username">
+        <label for="username">Email</label>
+        <input type="text" v-model="email" placeholder="Email" id="username">
 
         <label for="password">Password</label>
         <input type="password" v-model="password" placeholder="Password" id="password">
