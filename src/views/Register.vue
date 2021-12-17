@@ -17,6 +17,9 @@
         <input type="password" v-model="password" placeholder="Password" id="password">
 
         <button >Register</button>
+        <div class="social">
+          <router-link to="/" class="text-primary">Register instead</router-link>
+        </div>
     </form>
 
 
