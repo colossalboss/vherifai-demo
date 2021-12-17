@@ -406,7 +406,6 @@ export default createStore({
   },
   actions: {
     getRatesData({ commit }) {
-      alert("calling")
       fetch('http://api.coinlayer.com/api/live?access_key=9fd0e5e50d00a57d865466f3b878fdac')
         .then(response => response.json())
         .then(json => {

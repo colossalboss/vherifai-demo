@@ -75,11 +75,7 @@ export default {
   }
 }
 </script>
-<style >
-body{
-    background-color: #080710;
-}
-</style>
+
 <style media="screen" scoped>
       *,
 *:before,
