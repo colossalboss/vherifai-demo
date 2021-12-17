@@ -7,19 +7,18 @@
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
-    <form>
+    <form @submit.prevent="onLogin">
         <h3>Login Here</h3>
 
-        <label for="username">Username</label>
-        <input type="text" placeholder="Email or Phone" id="username">
+        <label for="username">Username {{ email}}</label>
+        <input type="text" v-model="email" placeholder="Email or Phone" id="username">
 
-        <label for="password">Password</label>
-        <input type="password" placeholder="Password" id="password">
+        <label for="password">Password {{password}}</label>
+        <input type="password" v-model="password" placeholder="Password" id="password">
 
         <button>Log In</button>
         <div class="social">
-          <div class="go"><i class="fab fa-google"></i>  Google</div>
-          <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
+          <router-link to="/register" class="text-primary">Register instead</router-link>
         </div>
     </form>
 
@@ -28,17 +27,57 @@
 </template>
 
 <script>
+import { ref } from '@vue/reactivity';
 // @ is an alias to /src
+import { useRouter } from "vue-router"
 
 export default {
   name: 'Home',
   components: {
     
+  },
+
+  setup() {
+      const router = useRouter();
+
+      const errorMessage = ref('')
+      const email = ref('')
+      const password = ref('')
+
+      const onLogin = () => {
+          const users = JSON.parse(localStorage.getItem('users'));
+
+          if (!users) {
+              errorMessage.value = "No user with this email";
+              return false;
+          } else {
+              const user = users.find(i => i.password === password.value && i.email === email.value);
+              console.log(user);
+              if (!user) {
+                  errorMessage.value = "User not found"
+              } else {
+                  localStorage.setItem('token', user.id);
+                  router.push('/dashboard');
+              }
+          }
+      }
+
+
+      return {
+          errorMessage,
+          email,
+          password,
+          onLogin,
+      }
   }
 }
 </script>
-
-<style media="screen">
+<style >
+body{
+    background-color: #080710;
+}
+</style>
+<style media="screen" scoped>
       *,
 *:before,
 *:after{
@@ -46,9 +85,7 @@ export default {
     margin: 0;
     box-sizing: border-box;
 }
-body{
-    background-color: #080710;
-}
+
 
 .background{
     width: 430px;

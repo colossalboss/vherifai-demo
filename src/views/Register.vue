@@ -1,26 +1,22 @@
 <template>
   <div class="home">
-    
-    
-    
     <div class="background">
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
-    <form>
-        <h3>Login Here</h3>
+    <form @submit.prevent="onRegister">
+        <h3>Register Here</h3>
 
-        <label for="username">Username</label>
-        <input type="text" placeholder="Email or Phone" id="username">
+        <label for="username">Full Name</label>
+        <input type="text" v-model="name" placeholder="Full Name" id="username">
+
+        <label for="username">Email</label>
+        <input type="email" v-model="email" placeholder="Email" id="username">
 
         <label for="password">Password</label>
-        <input type="password" placeholder="Password" id="password">
+        <input type="password" v-model="password" placeholder="Password" id="password">
 
-        <button>Log In</button>
-        <div class="social">
-          <div class="go"><i class="fab fa-google"></i>  Google</div>
-          <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
-        </div>
+        <button >Register</button>
     </form>
 
 
@@ -28,17 +24,69 @@
 </template>
 
 <script>
+import { ref } from '@vue/reactivity';
+import { useRouter } from "vue-router"
 // @ is an alias to /src
 
 export default {
   name: 'Home',
   components: {
     
+  },
+
+  setup() {
+      const router = useRouter();
+
+      const email = ref('')
+      const password = ref('')
+      const name = ref('')
+      const onRegister = () => {
+          const id = Math.floor(Math.random() * 1000);
+          const users = JSON.parse(localStorage.getItem('users'));
+          if (!users) {
+              localStorage.setItem('users', JSON.stringify([
+                {
+                    id,
+                  email: email.value,
+                  password: password.value,
+                  name: name.value,
+                  verificationStatus1: false,
+                  verificationStatus2: false,
+
+                }
+              ]))
+          } else {
+              
+              users.push({
+                  id,
+                  email: email.value,
+                  password: password.value,
+                  name: name.value,
+                  verificationStatus1: false,
+                  verificationStatus2: false,
+
+              })
+              localStorage.setItem('users', JSON.stringify(users));
+          }
+          
+          localStorage.setItem('token', id);
+        router.push('/dashboard')
+          email.value = ""
+          name.value = ""
+          password.value = ""
+      }
+
+      return {
+        email,
+        password,
+        name,
+        onRegister,
+      }
   }
 }
 </script>
 
-<style media="screen">
+<style media="screen" scoped>
       *,
 *:before,
 *:after{
