@@ -9,14 +9,17 @@
     </div>
     <form @submit.prevent="onLogin">
         <h3>Login Here</h3>
-
-        <label for="username">Username {{ email}}</label>
+        <div class="mt-2">
+          <p class="text-danger" v-if="errorMessage">{{ errorMessage }}</p>
+        </div>
+        <label for="username">Username</label>
         <input type="text" v-model="email" placeholder="Email or Phone" id="username">
 
-        <label for="password">Password {{password}}</label>
+        <label for="password">Password</label>
         <input type="password" v-model="password" placeholder="Password" id="password">
 
         <button>Log In</button>
+        
         <div class="social">
           <router-link to="/register" class="text-primary">Register instead</router-link>
         </div>

@@ -18,7 +18,7 @@
 
         <button >Register</button>
         <div class="social">
-          <router-link to="/" class="text-primary">Register instead</router-link>
+          <router-link to="/" class="text-primary">Login instead</router-link>
         </div>
     </form>
 
